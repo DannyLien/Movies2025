@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.google.gson.Gson
 import com.hank.movies.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -41,8 +42,11 @@ class MainActivity : AppCompatActivity() {
                 )
                 .build()
             val response = client.newCall(request).execute()
-            Log.d(TAG, "TMDB: response: ${response.body.string()}")
-
+            val json = response.body.string()
+            val gson = Gson().fromJson(json, MoviesResult::class.java)
+            gson.results.forEach {
+                Log.d(TAG, "TMDB: results: ${it.title}")
+            }
         }
 
         binding.fab.setOnClickListener { view ->
