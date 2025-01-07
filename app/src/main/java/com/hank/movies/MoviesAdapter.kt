@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import coil.load
+import coil.transform.RoundedCornersTransformation
 import com.hank.movies.databinding.RowMoviesViewBinding
 
 class MoviesAdapter(val movies: List<Movie>) :
@@ -29,8 +31,13 @@ class MoviesAdapter(val movies: List<Movie>) :
         val movieData = movies.get(position)
         holder.view.movieTitle.text = movieData.title
         holder.view.moviePop.text = movieData.popularity.toString()
-        holder.view.moviePoster.setImageResource(R.drawable.rainbow)
-
+        // "https://image.tmdb.org/t/p/w500"+"/wwemzKWzjKYJFfCeiB57q3r4Bcm.png"
+        holder.view.moviePoster.load(
+            "https://image.tmdb.org/t/p/w500${movieData.poster_path}"
+        ) {
+            placeholder(R.drawable.rainbow)
+            transformations(RoundedCornersTransformation())
+        }
     }
 
 }

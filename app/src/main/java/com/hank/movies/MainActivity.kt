@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.fab.setOnClickListener { view ->
+            finish()
 //            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                .setAction("Action", null)
 //                .setAnchorView(R.id.fab).show()
@@ -66,9 +67,9 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun setFinish(view: View) {
-        finish()
-    }
+//    fun setFinish(view: View) {
+//        finish()
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -78,6 +79,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_settings -> {
+                finish()
                 true
             }
 
