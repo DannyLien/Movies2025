@@ -12,6 +12,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.hank.movies.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
@@ -19,6 +20,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import kotlin.math.truncate
 
 class MainActivity : AppCompatActivity() {
     private val TAG: String? = MainActivity::class.java.simpleName
@@ -29,7 +31,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
-        //
+        // recy
+        val recy = binding.contentMain.recycler
+        recy.setHasFixedSize(true)
+        recy.layoutManager = LinearLayoutManager(this)
+        // url json gson
         CoroutineScope(Dispatchers.IO).launch {
             val client = OkHttpClient()
             val request = Request.Builder()
@@ -44,8 +50,11 @@ class MainActivity : AppCompatActivity() {
             val response = client.newCall(request).execute()
             val json = response.body.string()
             val gson = Gson().fromJson(json, MoviesResult::class.java)
-            gson.results.forEach {
-                Log.d(TAG, "TMDB: results: ${it.title}")
+//            gson.results.forEach {
+//                Log.d(TAG, "TMDB: results: ${it.title}")
+//            }
+            runOnUiThread {   // recy
+                recy.adapter = MoviesAdapter(gson.results)
             }
         }
 
