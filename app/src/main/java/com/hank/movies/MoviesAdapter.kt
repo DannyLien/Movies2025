@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import coil.load
+import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
 import com.hank.movies.databinding.RowMoviesViewBinding
 
@@ -35,8 +36,16 @@ class MoviesAdapter(val movies: List<Movie>) :
         holder.view.moviePoster.load(
             "https://image.tmdb.org/t/p/w500${movieData.poster_path}"
         ) {
-            placeholder(R.drawable.rainbow)
-            transformations(RoundedCornersTransformation())
+            placeholder(R.drawable.rainbow) // 預設圖
+            transformations(
+                // 圓型
+//                CircleCropTransformation()
+//                 四周圓角
+                RoundedCornersTransformation(
+                    topLeft = 60f, topRight = 60f,
+                    bottomLeft = 60f, bottomRight = 60f
+                )
+            )
         }
     }
 
