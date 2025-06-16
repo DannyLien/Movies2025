@@ -1,18 +1,22 @@
 package com.hank.movies
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import coil.load
 import coil.transform.CircleCropTransformation
 import coil.transform.RoundedCornersTransformation
+import com.google.android.material.snackbar.Snackbar
 import com.hank.movies.databinding.RowMoviesViewBinding
 
 class MoviesAdapter(val movies: List<Movie>) :
     RecyclerView.Adapter<MoviesAdapter.MoviesViewHolder>() {
-    class MoviesViewHolder(var view: RowMoviesViewBinding) : ViewHolder(view.root) {
+    private val TAG: String? = MoviesAdapter::class.java.simpleName
 
+    class MoviesViewHolder(var view: RowMoviesViewBinding) : ViewHolder(view.root) {
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoviesViewHolder {
@@ -36,17 +40,29 @@ class MoviesAdapter(val movies: List<Movie>) :
         holder.view.moviePoster.load(
             "https://image.tmdb.org/t/p/w500${movieData.poster_path}"
         ) {
-            placeholder(R.drawable.rainbow) // 預設圖
+            placeholder(R.drawable.rainbow).crossfade(2000) // 預設圖, 延2秒
             transformations(
-                // 圓型
-//                CircleCropTransformation()
-//                 四周圓角
-                RoundedCornersTransformation(
-                    topLeft = 60f, topRight = 60f,
-                    bottomLeft = 60f, bottomRight = 60f
+//                CircleCropTransformation()      // : 圓型
+                RoundedCornersTransformation(     // : 四周圓角
+                    topLeft = 60f, topRight = 60f, bottomLeft = 60f, bottomRight = 60f
                 )
             )
+        }
+        holder.itemView.setOnClickListener {
+            Log.d(TAG, "onBindViewHolder: movie- ${movieData.title} , ${position} , ${movies.size}")
         }
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+

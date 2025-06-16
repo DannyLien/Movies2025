@@ -1,17 +1,9 @@
 package com.hank.movies
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import com.google.android.material.snackbar.Snackbar
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.hank.movies.databinding.ActivityMainBinding
@@ -20,7 +12,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import kotlin.math.truncate
 
 class MainActivity : AppCompatActivity() {
     private val TAG: String? = MainActivity::class.java.simpleName
@@ -30,7 +21,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setSupportActionBar(binding.toolbar)
         // recy
         val recy = binding.contentMain.recycler
         recy.setHasFixedSize(true)
@@ -50,9 +40,6 @@ class MainActivity : AppCompatActivity() {
             val response = client.newCall(request).execute()
             val json = response.body.string()
             val gson = Gson().fromJson(json, MoviesResult::class.java)
-//            gson.results.forEach {
-//                Log.d(TAG, "TMDB: results: ${it.title}")
-//            }
             runOnUiThread {   // recy
                 recy.adapter = MoviesAdapter(gson.results)
             }
@@ -60,16 +47,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.fab.setOnClickListener { view ->
             finish()
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null)
-//                .setAnchorView(R.id.fab).show()
         }
 
     }
-
-//    fun setFinish(view: View) {
-//        finish()
-//    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -88,3 +68,18 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
